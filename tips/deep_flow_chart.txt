@@ -1,0 +1,7 @@
+0. add make width equal, height equal, both equal to dia
+1. add align left, right, top to dia
+2. add scroll as zoom in and zoom out // or more exactly, move in/out
+
+
+write a flow chart, it contains the architecture, frame, and box in the same
+page, and display when we scale the page

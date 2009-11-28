@@ -1,0 +1,21 @@
+1. sudo gvim /etc/network/interfaces: 
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet manual
+
+auto br0
+iface br0 inet dhcp
+        bridge_ports eth0
+
+2. sudo /etc/init.d/networking restart
+3. install guest os
+4. modify /etc/libvirt/qemu/guest_os_name.xml
+    <interface type='bridge'>
+      <mac address='your mac address'/>
+      <source bridge='br0'/>
+    </interface>
+5. sudo virsh define guest_os_name.xml
+6. start kvm again
+

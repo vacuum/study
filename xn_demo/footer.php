@@ -1,0 +1,2 @@
+<div style="width:96%;text-align:center;color:#808080;padding-top:20px;padding-bottom:20px;">BM 未来传媒 &copy; 2008</div>
+<xn:iframe src="http://www.becomedia.cn/developers/statistics/?bm_sig_appid=10940" width="0" height="0" scrolling="no" frameborder="0"/>

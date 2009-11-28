@@ -1,0 +1,29 @@
+1. Install lvs on the load balancer
+2. configure load balancer as 
+	eth0 	192.168.1.86	netmask 255.255.255.0
+	eth0:0 	192.168.1.125	netmask 255.255.255.0
+   configure the real server as 
+	eth0 	192.168.1.85	netmask 255.255.255.0
+	lo:0 	192.168.1.125	netmask 255.255.255.255
+  * please care that the netmask for real server's alias is full
+  * but for load balancer, it is left to capture all other packets
+	
+	To disable the arp announce for the real server's VIP:
+	bash$ cat /proc/sys/net/ipv4/conf/lo/arp_announce 
+	2
+	bash$ cat /proc/sys/net/ipv4/conf/lo/arp_ignore 
+	8
+	more informations on this:
+	http://kb.linuxvirtualserver.org/wiki/ARP_Issues_in_LVS/DR_and_LVS/TUN_Clusters
+	http://kb.linuxvirtualserver.org/wiki/Using_arp_announce/arp_ignore_to_disable_ARP
+
+3. add ipvsadm rules to /etc/ipvsadm.rules on 192.168.1.86
+	-A -t 192.168.1.125:80 -s wrr		# weighted round robin
+	-a -t 192.168.1.125:80 -r 192.168.1.85:80 -g -w 100	 
+	the connection will be forwarded to 1.85 with weight 100
+	-a -t 192.168.1.125:80 -r 127.0.0.1:80 -g -w 80
+	the connection will be forwarded to itself with weight 80
+	big weight takes priority
+4. configure apache the both servers
+5. lynx -dump 192.168.1.125
+6. please clean the arp cache on client or there may be errors.
